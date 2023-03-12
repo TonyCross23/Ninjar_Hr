@@ -3,9 +3,11 @@
 
 @section('content')
 
-<div class=" my-3">
-    <a href="{{ route('permission.create') }}" class="btn btn-theme btn-sm"><i class="fas fa-plus-circle"></i> Create Permission</a>
-</div>
+@can('Create_Permission')
+    <div class=" my-3">
+        <a href="{{ route('permission.create') }}" class="btn btn-theme btn-sm"><i class="fas fa-plus-circle"></i> Create Permission</a>
+    </div>
+@endcan
 
     <div class="row">
         <div class="card" style="width: 100%;">

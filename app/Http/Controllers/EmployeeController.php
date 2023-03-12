@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreEmployee;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdateEmployee;
@@ -15,10 +16,19 @@ use Illuminate\Support\Facades\Storage;
 class EmployeeController extends Controller
 {
     public function index (){
+
+        if(!auth()->user()->can('View_Employee')){
+            abort(404);
+        }
         return view('employee.index');
     }
 
     public function ssd (Request $request){
+
+        if(!auth()->user()->can('View_Employee')){
+            abort(404);
+        }
+
         $employees = User::with('department');
         return Datatables::of($employees)
         ->filterColumn('department_name',function($query , $keyword){
@@ -42,10 +52,31 @@ class EmployeeController extends Controller
         ->editColumn('updated_at',function($each){
             return Carbon::parse($each->updated_at)->format('Y-m-d H:i:s');
         })
+        ->editColumn('role_name',function($each){
+            $output = '';
+            foreach ($each->roles as $role) {
+                $output .= '<span class="badge badge-pill bg-primary">'.$role->name.'</span>';
+            }
+            return $output;
+        })
         ->addColumn('action',function($each){
-            $edit_icon = '<a href=" '. route('employee.edit',$each->id) .'  " class="text-warning"><i class="fas fa-edit"></i></a>';
-            $info_icon = '<a href=" '. route('employee.show',$each->id) .'  " class="text-info"><i class="fas fa-info-circle"></i></a>';
-            $delete_icon = '<a href="#" class="text-danger delete-btn" data-id=" '.$each->id.' " ><i class="fas fa-trash-alt"></i></a>';
+
+            $edit_icon = '';
+            $info_icon = '';
+            $delete_icon = '';
+
+
+            if(auth()->user()->can('Edit_Employee')){
+                $edit_icon = '<a href=" '. route('employee.edit',$each->id) .'  " class="text-warning"><i class="fas fa-edit"></i></a>';
+            }
+
+            if(auth()->user()->can('View_Employee')){
+                $info_icon = '<a href=" '. route('employee.show',$each->id) .'  " class="text-info"><i class="fas fa-info-circle"></i></a>';               
+            }
+
+            if(auth()->user()->can('Edit_Employee')){
+                $delete_icon = '<a href="#" class="text-danger delete-btn" data-id=" '.$each->id.' " ><i class="fas fa-trash-alt"></i></a>';    
+            }
          
 
             
@@ -54,17 +85,26 @@ class EmployeeController extends Controller
         ->addColumn('plus-icon',function($each){
             return null;
         })
-        ->rawColumns(['department_name','profile_img','is_present','action'])
+        ->rawColumns(['department_name','profile_img','role_name','is_present','action'])
         ->make(true);
     }
 
     // create Employee page
     public function create () {
+
+        if(!auth()->user()->can('Create_Employee')){
+            abort(404);
+        }
+        $roles = Role::all();
         $departments = Department::orderBy('title')->get();
-        return view ('employee.create',compact('departments'));
+        return view ('employee.create',compact('roles','departments'));
     }
 
     public function store (StoreEmployee $request){
+
+        if(!auth()->user()->can('Create_Employee')){
+            abort(404);
+        }
 
         $profile_img_name = null;
 
@@ -91,18 +131,30 @@ class EmployeeController extends Controller
         $employee->password = Hash::make($request->password);
         $employee->save();
 
+        $employee->syncRoles($request->roles)->toArray();
+
         return redirect()->route('employee.index')->with('create','Employee is Successfully Create');
     }
 
     // edit page 
     public function edit ($id) {
+
+        if(!auth()->user()->can('Edit_Employee')){
+            abort(404);
+        }
         $employee = User::findOrFail($id);
         $departments = Department::orderBy('title')->get();
-        return view('employee.edit',compact('employee','departments'));
+        $roles = Role::all();
+        $old_role = $employee->roles->pluck('id')->toArray();
+        return view('employee.edit',compact('employee','departments','roles','old_role'));
     }
 
     // update 
     public function update ($id, UpdateEmployee $request){
+
+        if(!auth()->user()->can('Edit_Employee')){
+            abort(404);
+        }
             $employee = User::findOrFail($id);
 
             $profile_img_name = $employee->profile_img;
@@ -129,6 +181,8 @@ class EmployeeController extends Controller
             $employee->password = $request->password ? Hash::make($request->password) : $employee->password;
             $employee->update();
 
+            $old_role = $employee->roles->pluck('id')->toArray();
+            $employee->syncRoles($request->roles);
             return redirect()->route('employee.index')->with('update','Employee is Successfully Updated');
     }
 
@@ -140,6 +194,10 @@ class EmployeeController extends Controller
 
     // employee delete
     public function destroy ($id){
+
+        if(!auth()->user()->can('Delete_Employee')){
+            abort(404);
+        }
         $employee = User::findOrFail($id);
         $employee->delete();
 

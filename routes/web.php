@@ -1,5 +1,6 @@
 <?php
 
+use Laragear\WebAuthn\WebAuthn;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
@@ -8,10 +9,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\CompanySettingController;
+
 
 
 
 Auth::routes(['register' => true]);
+
+// WebAuthn Routes
+WebAuthn::routes();
 
 Route::middleware('auth')->group(function(){
     Route::get('/',[PageController::class,'home'])->name('home');
@@ -42,4 +48,7 @@ Route::middleware('auth')->group(function(){
 
            //permission Datatable
            Route::get('permission/datatable/ssd',[PermissionController::class,'ssd'])->name('ssd');
+
+              // Company Setting 
+      Route::resource('company-setting', CompanySettingController::class)->only(['edit','update','show']);
 });

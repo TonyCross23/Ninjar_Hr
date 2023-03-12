@@ -43,6 +43,8 @@ body {
 /* ----------header Menu----------- */
 
 .app-bar {
+    width: 100%;
+
     background: #fff;
     padding: 2px 0 !important;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .15) !important;
@@ -704,3 +706,14 @@ div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTab
 }
 }
 
+/* ------------date picker ----------------- */
+.daterangepicker .calendar-time {
+    margin-right: 8px !important;
+}
+
+/* ----------biometric------------ */
+
+.fa-fingerprint:before {
+    content: "\f577";
+    font-size: 39px;
+}

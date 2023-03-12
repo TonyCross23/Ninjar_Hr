@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+   
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -23,9 +26,13 @@
     {{-- daterangepicker --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
+    {{-- select 2 --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     {{-- css --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
+  @vite(['resources/js/app.js', 'resources/js/vendor/webauthn/webauthn.js'])
 </head>
 
 <body>
@@ -65,37 +72,63 @@
                   <span>Menu</span>
                 </li>
 
-                <li>
+                @can('View_Profile')
+                  <li>
                     <a href="#">
                       <i class="fa fa-home"></i>
                       <span>Home</span>
                     </a>
                   </li>
-                  <li>
-                    <a href="{{ route('employee.index') }}">
-                      <i class="fa fa-users"></i>
-                      <span>Employees</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{{ route('department.index') }}">
-                      <i class="fa fa-sitemap"></i>
-                      <span>Department</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{{ route('role.index') }}">
-                      <i class="fa-solid fa-user-shield"></i>
-                      <span>Role</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{{ route('permission.index') }}">
-                      <i class="fa-solid fa-shield"></i>
-                      <span>Permission</span>
-                    </a>
-                  </li>
+                @endcan
 
+                @can('View_Company_Setting')
+                <li>
+                  <a href="{{ route('company-setting.show', 1) }}">
+                    <i class="fa-solid fa-building"></i>
+                    <span>Company Setting</span>
+                  </a>
+                </li>
+                @endcan
+
+
+                @can('View_Employee')
+                <li>
+                  <a href="{{ route('employee.index') }}">
+                    <i class="fa fa-users"></i>
+                    <span>Employees</span>
+                  </a>
+                </li>
+                @endcan
+
+                @can('View_Department')
+                <li>
+                  <a href="{{ route('department.index') }}">
+                    <i class="fa fa-sitemap"></i>
+                    <span>Department</span>
+                  </a>
+                </li>
+                @endcan
+
+                @can('View_Role')
+                  
+                <li>
+                  <a href="{{ route('role.index') }}">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Role</span>
+                  </a>
+                </li>
+                @endcan
+
+                @can('View_Permission')
+                <li>
+                  <a href="{{ route('permission.index') }}">
+                    <i class="fa-solid fa-shield"></i>
+                    <span>Permission</span>
+                  </a>
+                </li>
+                @endcan
+
+             
 
 
                 {{-- <li class="sidebar-dropdown">
@@ -183,7 +216,8 @@
 
     {{-- jquery --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     {{-- daterangepicker --}}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -203,11 +237,16 @@
     </script>
     <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/js/jquery.dataTables.min.js">
     </script>
+
+    {{-- select 2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     {{-- sweet alert 2 --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     {{-- sweet alert --}}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script>
         jQuery(function($) {
 
@@ -272,6 +311,44 @@
                  });
             @endif
 
+            @if (session('update'))
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Update successfully'
+                })
+            @endif
+
+            @if (session('create'))
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Create successfully'
+                })
+            @endif
+
             $.extend(true, $.fn.dataTable.defaults, {
               scrollCollapse: true,
               paging: true,
@@ -287,6 +364,11 @@
                     "processing": "<p class='my-2'>Loading...</p>",
                 },
 
+            });
+
+            
+            $(document).ready(function() {
+                 $('.select-item').select2();
             });
         });
     </script>

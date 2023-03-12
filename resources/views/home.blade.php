@@ -12,7 +12,12 @@
                             <div class="mt-3 ms-2">
                                 <span><strong>{{ $employee->name }}</strong></span>
                                 <p class="text-muted mb-1"> <span class="text-muted">{{ $employee->employee_id }}</span> | <span class="text-theme">{{ $employee->phone }}</span> </p>
-                                <p class="text-muted mb-1"><span class="badge badge-pill badge-dark">{{ $employee->department ? $employee->department->title : '-'}}</span></p>
+                                <p class="text-muted mb-1">
+                                    @foreach ($employee->roles as $role )
+                                         <span class="badge badge-pill bg-primary">{{ $role->name }}</span>
+                                    @endforeach
+                                </p>
+                                <p class="text-muted mb-1"><span class="badge badge-pill bg-dark">{{ $employee->department ? $employee->department->title : '-'}}</span></p>
                             </div>
                         </div>
                     </div>

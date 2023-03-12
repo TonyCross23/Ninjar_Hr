@@ -3,9 +3,11 @@
 
 @section('content')
 
+@can('Create_Employee')
 <div class=" my-2">
     <a href="{{ route('employee.create') }}" class="btn btn-theme btn-sm"><i class="fas fa-plus-circle"></i> Create Employee</a>
 </div>
+@endcan
 
         <div class="card">
             <div class="card-body">
@@ -17,6 +19,7 @@
                         <th class="text-center">Phone</th>
                         <th class="text-center">Email</th>
                         <th class="text-center">Depatrment</th>
+                        <th class="text-center">Role(or)Designation</th>
                         <th class="text-center">Is Present?</th>
                         <th class="text-center no-sort">Action</th>
                         <th class="text-center hidden">Updated at</th>
@@ -46,15 +49,16 @@ var table =  $('.Datatable').DataTable({
             { data: 'phone', name: 'phone' , class:'text-center' },
             { data: 'email', name: 'email' , class:'text-center' },
             { data: 'department_name', name: 'department_name' , class:'text-center' },
+            { data: 'role_name', name: 'role_name' , class:'text-center' },
             { data: 'is_present', name: 'is_present' , class:'text-center' },
             { data: 'action', name: 'action' , class:'text-center pe' },
             { data: 'updated_at', name: 'updated_at' , class:'text-center' },
         ],
    
-        order : [[8 , "desc"]],
+        order : [[9 , "desc"]],
         columnDefs: [
             {
-                "targets": 8,
+                "targets": 9,
                 "visible": false,
               
             },

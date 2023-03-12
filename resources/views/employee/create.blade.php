@@ -38,8 +38,17 @@
                             <textarea name="address" class="form-control" id="address" rows="4" col="3"></textarea>
                             <label for="address" class="form-label">Address</label>
                         </div>
+                 
 
+                    <div class="from-group mb-4">
+                        <label for="">Role (or) Designation</label>
+                        <select name="roles[]" class="form-select select-item" aria-label="Default select example" multiple>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                @endforeach
+                        </select>
                     </div>
+                </div>
                     <div class="col-md-6">
 
 
@@ -131,7 +140,8 @@
                 for(var i = 0 ; i < file_length ; i++) {
                     $('.preview_img').append(`<img src="${URL.createObjectURL(event.target.files[i])}"/>`)
                 }
-            })
+            });
+
         });
     </script>
 @endsection

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     /*
@@ -61,8 +63,10 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            // 'driver' => 'eloquent',
+            'driver' => 'eloquent-webauthn',
+            'model' => User::class,
+            'password_fallback' => true,
         ],
 
         // 'users' => [

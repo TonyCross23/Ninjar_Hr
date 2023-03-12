@@ -40,6 +40,15 @@
                             <label for="address" class="form-label">Address</label>
                         </div>
 
+                        <div class="from-group mb-4">
+                            <label for="">Role (or) Designation</label>
+                            <select name="roles[]" class="form-select select-item" aria-label="Default select example" multiple>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}" @if (in_array($role->id , $old_role)) selected @endif>{{ $role->name }}</option>
+                                    @endforeach
+                            </select>
+                        </div>
+
                     </div>
                     <div class="col-md-6">
 
