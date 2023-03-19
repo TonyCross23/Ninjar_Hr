@@ -51,12 +51,16 @@
             <div class="card-body">
                 <h5>Biometric Authentication</h5>
 
-                {{-- <form id="biometric_auth_form"> --}}
+                <form id="register-form">
                     <a href="#"  class="btn biometric_auth_btn">
                         <i class="fa-solid fa-fingerprint"></i>
                         <i class="fa-solid fa-circle-plus"></i>
                     </a>
-                {{-- </form> --}}
+                </form>
+
+                {{-- <form id="register-form">
+                    <button type="submit" value="Register authenticator">
+                </form> --}}
             </div>
         </div>
 
@@ -79,21 +83,35 @@
 
 <script>
 
-           $(document).ready(function(){
-            const register = event => {
-                    event.preventDefault();
+        //    $(document).ready(function(){
+        //     const register = event => {
+        //             event.preventDefault();
                     
-                    new WebAuthn().register()
-                    .then(response => alert('Registration successful!'))
-                }
+        //             new WebAuthn().register()
+        //             .then(response => alert('Registration successful!'))
+        //         }
 
-                // document.getElementById('biometric_auth_form').addEventListener('submit', register)
+        //         // document.getElementById('biometric_auth_form').addEventListener('submit', register)
 
-                $('.biometric_auth_btn').on('click',function(event){
-                    register(event)->HTML();
-                })
-           })
+        //         $('.biometric_auth_btn').on('click',function(event){
+        //             register(event);
+        //         })
+        //    })
 
+
+    const register = (event) => {
+        event.preventDefault()
+        new Larapass({
+            register: 'webauthn/register',
+            registerOptions: 'webauthn/register/options'
+        }).register()
+          .then(response => alert('Registration successful!'))
+          .catch(response => alert('Something went wrong, try again!'))
+    }
+
+    document.getElementById('register-form').addEventListener('submit', register)
+
+   
 </script>
 
 @endsection

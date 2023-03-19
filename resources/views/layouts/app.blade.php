@@ -16,6 +16,8 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet"/>
 
@@ -32,7 +34,7 @@
     {{-- css --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-  @vite(['resources/js/app.js', 'resources/js/vendor/webauthn/webauthn.js'])
+ 
 </head>
 
 <body>
@@ -128,6 +130,14 @@
                 </li>
                 @endcan
 
+                @can('View_Attendance')
+                <li>
+                  <a href="{{ route('attendance.index') }}">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Attendance</span>
+                  </a>
+                </li>
+                @endcan
              
 
 
@@ -190,14 +200,14 @@
                           <p class="mb-0">Home</p>
                       </a>
 
-                      <a href="">
-                          <i class="fa fa-home"></i>
-                          <p class="mb-0">Home</p>
+                      <a href="{{ route('attendance.scan') }}">
+                        <i class="fa-solid fa-user-clock"></i>
+                          <p class="mb-0">Attendance</p>
                       </a>
 
                       <a href="">
-                          <i class="fa fa-home"></i>
-                          <p class="mb-0">Home</p>
+                        <i class="fa-solid fa-briefcase"></i>
+                          <p class="mb-0">Project</p>
                       </a>
 
                       <a href="{{ route('profile.prfile') }}">
@@ -215,7 +225,6 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"></script>
 
     {{-- jquery --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     {{-- daterangepicker --}}
@@ -224,6 +233,7 @@
 
     <!-- Laravel Javascript Validation -->
     <script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+
 
     {{-- Datatable --}}
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
@@ -247,8 +257,22 @@
     {{-- sweet alert --}}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+   
+
     <script>
-        jQuery(function($) {
+      const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+        
+    $(function($) {
 
           let token = document.head.querySelector('meta[name="csrf-token"]');
 
@@ -312,17 +336,7 @@
             @endif
 
             @if (session('update'))
-                const Toast = Swal.mixin({
-                  toast: true,
-                  position: 'top-end',
-                  showConfirmButton: false,
-                  timer: 3000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
+           
 
                 Toast.fire({
                   icon: 'success',

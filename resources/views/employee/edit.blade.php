@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="form-outline mb-4">
-                            <textarea name="address" class="form-control" id="address" rows="3">{{ $employee->address }}</textarea>
+                            <textarea name="address" class="form-control" id="address" rows="2">{{ $employee->address }}</textarea>
                             <label for="address" class="form-label">Address</label>
                         </div>
 
@@ -47,6 +47,11 @@
                                         <option value="{{ $role->id }}" @if (in_array($role->id , $old_role)) selected @endif>{{ $role->name }}</option>
                                     @endforeach
                             </select>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="number" id="pin_code" name="pin_code"  class="form-control pin_code" value="{{ $employee->pin_code }}">
+                            <label for="pin_code" class="form-label">Pin Code</label>
                         </div>
 
                     </div>

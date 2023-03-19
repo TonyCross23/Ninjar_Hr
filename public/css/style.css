@@ -324,7 +324,6 @@ body {
 }
 
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown>a:after {
-    font-family: "Font Awesome 5 Free";
     font-weight: 900;
     content: "\f105";
     font-style: normal;

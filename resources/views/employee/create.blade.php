@@ -35,11 +35,11 @@
                         </div>
 
                         <div class="form-outline mb-4">
-                            <textarea name="address" class="form-control" id="address" rows="4" col="3"></textarea>
+                            <textarea name="address" class="form-control" id="address" rows="2"></textarea>
                             <label for="address" class="form-label">Address</label>
                         </div>
                  
-
+          
                     <div class="from-group mb-4">
                         <label for="">Role (or) Designation</label>
                         <select name="roles[]" class="form-select select-item" aria-label="Default select example" multiple>
@@ -96,9 +96,15 @@
 
                     </div>
                 </div>
+
+                <div class="form-outline mb-4">
+                    <input type="number" id="pin_code" name="pin_code"  class="form-control pin_code">
+                    <label for="pin_code" class="form-label">Pin Code</label>
+                </div>
+
                 
                 <div class="form-outline mb-4">
-                    <input type="password" id="password" name="password"  class="form-control">
+                    <input type="password" id="password" name="password"  autocomplete="off" class="form-control">
                     <label for="password" class="form-label">Password</label>
                 </div>
                 </div>
