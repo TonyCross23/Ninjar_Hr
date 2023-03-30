@@ -1,22 +1,24 @@
 @extends('layouts.app')
-@section('title','Role')
+@section('title','Salary')
 
 @section('content')
 
-@can('Create_Role')
-    <div class=" my-2">
-        <a href="{{ route('role.create') }}" class="btn btn-theme btn-sm"><i class="fas fa-plus-circle"></i> Create Role</a>
+@can('Create_Salary')    
+    <div class=" my-3">
+        <a href="{{ route('salary.create') }}" class="btn btn-theme btn-sm"><i class="fas fa-plus-circle"></i> Create Salary</a>
     </div>
 @endcan
 
-  
-        <div class="card mb-3">
+    <div class="row">
+        <div class="card" style="width: 100%;">
             <div class="card-body">
                 <table class="table table-bordered Datatable" style="width:100%;">
                     <thead>
                         <th class="text-center no-sort no-search"></th>
-                        <th class="text-center ">Name</th>
-                        <th class="text-center ">Permission</th>
+                        <th class="text-center ">Employee</th>
+                        <th class="text-center ">Month</th>
+                        <th class="text-center ">Year</th>
+                        <th class="text-center ">Amount</th>
                         <th class="text-center no-sort">Action</th>
                         <th class="text-center hidden">Updated at</th>
     
@@ -24,7 +26,7 @@
                 </table>
             </div>
         </div>
-
+    </div>
   
 @endsection
 
@@ -32,22 +34,24 @@
     <script>
     $(document).ready(function(){
 var table =  $('.Datatable').DataTable({
-                responsive:true,
-                paginate:true,
+                "responsive":true,
                 "processing": true,
                 "serverSide": true,
                 "mark": true,
-                ajax: '/role/datatable/ssd',
+                ajax: '/salary/datatable/ssd',
         columns: [
             { data: 'plus-icon', name: 'plus-icon' , class:'text-center' },
-            { data: 'name', name: 'name' , class:'text-center' },
-            { data: 'permissions', name: 'permission' , class:'text-center' },
+            { data: 'employee_name', name: 'employee_name' , class:'text-center' },
+            { data: 'month', name: 'month' , class:'text-center' },
+            { data: 'year', name: 'year' , class:'text-center' },
+            { data: 'amount', name: 'amount' , class:'text-center' },
             { data: 'action', name: 'action' , class:'text-center pe' },
             { data: 'updated_at', name: 'updated_at' , class:'text-center' },
         ],
    
-        order : [[4 , "desc"]],
-  
+        order : [[6 , "desc"]],
+ 
+
 });
 
     $(document).on('click','.delete-btn',function(e){
@@ -64,7 +68,7 @@ var table =  $('.Datatable').DataTable({
                 if (willDelete) { 
                     $.ajax({
                             method: "DELETE",
-                            url: `/role/${id}`,
+                            url: `/salary/${id}`,
                         }).done(function( res ) {
                            table.ajax.reload();
                     });

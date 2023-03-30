@@ -19,6 +19,12 @@ class ChackinChackoutController extends Controller
     // chackin 
     public function chackinchatoutstore (Request $request) {
         
+        if(now()->format('D')  == "Sat"  ||  now()->format('D') == "Sun"){
+            return [
+                'status' => 'fail',
+                'message' => 'Today is off day.'
+         ];
+        }
        
         $user = User::where('pin_code',$request->pin_code)->first();
 

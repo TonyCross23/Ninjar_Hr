@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\QrCodeController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\MyAttendanceController;
 use App\Http\Controllers\AttendanceScanController;
 use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\ChackinChackoutController;
@@ -40,35 +42,44 @@ Route::middleware('auth')->group(function(){
     // qrcode
     Route::get('/qrcode', [QrCodeController::class, 'index']);
 
-
-      // department
-      Route::resource('department', DepartmentController::class);
-
-      //Department Datatable
-      Route::get('department/datatable/ssd',[DepartmentController::class,'ssd'])->name('ssd');
+        // department
+        Route::resource('department', DepartmentController::class);
+        //Department Datatable
+        Route::get('department/datatable/ssd',[DepartmentController::class,'ssd'])->name('ssd');
 
          // attendance
          Route::resource('attendance', AttendanceController::class);
-
          //attendance Datatable
          Route::get('attendance/datatable/ssd',[AttendanceController::class,'ssd'])->name('ssd');
-
+        //  over view
+        Route::get('attendance-overview', [AttendanceController::class,'overview'])->name('attendance.overview');
+       Route::get('attendance-overview-table', [AttendanceController::class,'overviewTable']);
+    
        // role
        Route::resource('role', RoleController::class);
 
        //Role Datatable
        Route::get('role/datatable/ssd',[RoleController::class,'ssd'])->name('ssd');
 
-           // permission
-           Route::resource('permission', PermissionController::class);
+       // permission
+       Route::resource('permission', PermissionController::class);
 
-           //permission Datatable
-           Route::get('permission/datatable/ssd',[PermissionController::class,'ssd'])->name('ssd');
+       //permission Datatable
+        Route::get('permission/datatable/ssd',[PermissionController::class,'ssd'])->name('ssd');
 
-              // Company Setting 
+      // Company Setting 
       Route::resource('company-setting', CompanySettingController::class)->only(['edit','update','show']);
 
       // attendance-scan 
       Route::get('attendance-scan',[AttendanceScanController::class,'scan'])->name('attendance.scan');
       Route::post('attendance-scan/store',[AttendanceScanController::class,'scanstore']);
+      Route::get('my-attendance/datatable/ssd',[MyAttendanceController::class,'ssd'])->name('ssd');
+       Route::get('my-attendance-overview-table', [MyAttendanceController::class,'overviewTable']);
+
+       // salary
+       Route::resource('salary', SalaryController::class);
+       //salary Datatable
+       Route::get('salary/datatable/ssd',[SalaryController::class,'ssd'])->name('ssd');
+ 
+
 });

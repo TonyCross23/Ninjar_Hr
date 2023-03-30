@@ -10,9 +10,9 @@
 @endcan
 
     <div class="row">
-        <div class="card" style="width: 100%;">
+        <div class="card" >
             <div class="card-body">
-                <table class="table table-bordered Datatable table-responsive" style="width:100%;">
+                <table class="table table-bordered Datatable" style="width:100%;">
                     <thead>
                         <th class="text-center no-sort no-search"></th>
                         <th class="text-center ">Employee</th>
@@ -50,28 +50,7 @@ var table =  $('.Datatable').DataTable({
         ],
    
         order : [[6 , "desc"]],
-        columnDefs: [
-            {
-                "targets": 6,
-                "visible": false,
-              
-            },
-            {
-                "targets": 0,
-                "class" : "control",
-                "orderable" :false
-            },
-            {
-                "targets": 'no-sort',
-                "orderable" : false
-              
-            },
-            {
-                "targets": 'no-search',
-                "searchable" : false
-              
-            },
-        ],
+  
 
            "language": {
                     "paginate": {

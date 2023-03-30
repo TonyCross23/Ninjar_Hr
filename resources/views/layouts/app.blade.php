@@ -102,6 +102,16 @@
                 </li>
                 @endcan
 
+                @can('View_Salary')
+                <li>
+                  <a href="{{ route('salary.index') }}">
+                    <i class="fas fa-money-bill"></i>
+                    <span>Salary</span>
+                  </a>
+                </li>
+                @endcan
+
+
                 @can('View_Department')
                 <li>
                   <a href="{{ route('department.index') }}">
@@ -134,12 +144,20 @@
                 <li>
                   <a href="{{ route('attendance.index') }}">
                     <i class="fa-solid fa-calendar-days"></i>
-                    <span>Attendance</span>
+                    <span>Attendance(Employee)</span>
+                  </a>
+                </li>
+                @endcan
+
+                @can('View_Attendance_Over')
+                <li>
+                  <a href="{{ route('attendance.overview') }}">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Attendance(Over View)</span>
                   </a>
                 </li>
                 @endcan
              
-
 
                 {{-- <li class="sidebar-dropdown">
                   <a href="#">
@@ -372,11 +390,34 @@
                 pageLength : 5,
                 "language": {
                     "paginate": {
-                          "First": "<i class='fas fa-arrow-left'></i>",
-                          "Last": "<i class='fas fa-arrow-right'></i>"
+                          "previous": "<i class='fas fa-arrow-left'></i>",
+                          "next": "<i class='fas fa-arrow-right'></i>"
                     },
                     "processing": "<p class='my-2'>Loading...</p>",
                 },
+
+                columnDefs: [
+            {
+                "targets": 'hidden',
+                "visible": false,
+              
+            },
+            {
+                "targets": 0,
+                "class" : "control",
+                "orderable" :false
+            },
+            {
+                "targets": 'no-sort',
+                "orderable" : false
+              
+            },
+            {
+                "targets": 'no-search',
+                "searchable" : false
+              
+            },
+        ],
 
             });
 

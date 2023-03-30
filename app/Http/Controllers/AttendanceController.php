@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\CheckinCheckout;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
+use App\Models\CompanySetting;
 use App\Models\ChackinChackout;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\StoreAttendance;
@@ -129,5 +132,33 @@ class AttendanceController extends Controller
         $attendance->delete();
 
         return 'Success';
+    }
+
+    // attendance over view
+    public function overview (Request $request) {
+
+        if(!auth()->user()->can('View_Attendance_Over')){
+            abort(404);
+        }
+
+        return view('attendance.over-view');
+    }
+
+    public function overviewTable(Request $request)
+    {
+        if(!auth()->user()->can('View_Attendance_Over')){
+            abort(404);
+        }
+
+        $month = $request->month;
+        $year = $request->year;
+        $startOfMonth = $year . '-' . $month . '-01';
+        $endOfMonth = Carbon::parse($startOfMonth)->endOfMonth()->format('Y-m-d');
+
+        $employees = User::orderBy('employee_id')->where('name', 'like', '%' . $request->employee_name . '%')->get();
+        $company_setting = CompanySetting::findOrFail(1);
+        $periods = new CarbonPeriod($startOfMonth, $endOfMonth);
+        $attendances = ChackinChackout::whereMonth('date', $month)->whereYear('date', $year)->get();
+             return view('components.attendances_overview_table', compact('employees', 'company_setting', 'periods', 'attendances'))->render();
     }
 }
