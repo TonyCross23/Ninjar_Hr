@@ -8,6 +8,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AttendanceController;
@@ -81,5 +82,8 @@ Route::middleware('auth')->group(function(){
        //salary Datatable
        Route::get('salary/datatable/ssd',[SalaryController::class,'ssd'])->name('ssd');
  
+      //  payroll
+      Route::get('payroll',[PayrollController::class,'payroll'])->name('payroll');
+      Route::get('payroll-table', [PayrollController::class,'payrollTable']);
 
 });

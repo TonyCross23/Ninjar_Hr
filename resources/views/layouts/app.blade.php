@@ -144,7 +144,7 @@
                 <li>
                   <a href="{{ route('attendance.index') }}">
                     <i class="fa-solid fa-calendar-days"></i>
-                    <span>Attendance(Employee)</span>
+                    <span>Attendance (Employee)</span>
                   </a>
                 </li>
                 @endcan
@@ -153,11 +153,19 @@
                 <li>
                   <a href="{{ route('attendance.overview') }}">
                     <i class="fa-solid fa-calendar-days"></i>
-                    <span>Attendance(Over View)</span>
+                    <span>Attendance (Over View)</span>
                   </a>
                 </li>
                 @endcan
              
+                @can('view_payroll')
+                <li>
+                    <a href="{{route('payroll')}}">
+                        <i class="fas fa-money-check"></i>
+                        <span>Payroll</span>
+                    </a>
+                </li>
+                @endcan
 
                 {{-- <li class="sidebar-dropdown">
                   <a href="#">
