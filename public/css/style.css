@@ -44,7 +44,6 @@ body {
 
 .app-bar {
     width: 100%;
-
     background: #fff;
     padding: 2px 0 !important;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .15) !important;
@@ -626,6 +625,81 @@ span .paginate_button {
     border: 1px solid #ddd;
     
  }
+
+.profile-thumbnail2 {
+    background: #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    border: 1px solid #ddd;
+    padding: 3px;
+    margin: 1px;
+}
+
+.profile-thumbnail3 {
+    background: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 3px;
+    margin: 2px;
+}
+
+.image-thumbnail {
+    background: #fff;
+    width: 75px;
+    height: 75px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 3px;
+    margin: 3px;
+}
+
+ .pdf-thumbnail {
+    background: #fff;
+    width: 60px;
+    height: 75px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 3px;
+    display: inline-block;
+    text-align: center;
+    color: #000;
+}
+
+.pdf-thumbnail i {
+    font-size: 32px;
+}
+
+ .alert-warning {
+        background-color: #fff3cd88 !important;
+    }
+
+    .alert-info {
+        background-color: #d1ecf188 !important;
+    }
+
+    .alert-success {
+        background-color: #d4edda88 !important;
+    }
+
+    .select2-container {
+        z-index: 9999 !important;
+    }
+
+    .ghost {
+        background: #eee !important;
+        border: 2px dashed #333 !important;
+    }
+
+    .handle{
+        cursor: move;
+        cursor: -webkit-grabbing;
+    }
+    
+
 
 .dash-border {
     border-left: 2px dashed #ddd;

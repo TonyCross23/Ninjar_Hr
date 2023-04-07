@@ -30,11 +30,11 @@
             $attendance = collect($attendances)->where('user_id', $employee->id)->where('date',
             $period->format('Y-m-d'))->first();
             if($attendance){
-                if(!is_null($attendance->checkin_time)){
-                    if($attendance->checkin_time < $office_start_time){
+                if(!is_null($attendance->chackin_time)){
+                    if($attendance->chackin_time < $office_start_time){
                         $attendanceDays += 0.5;
                         $checkin_icon='<i class="fas fa-check-circle text-success"></i>' ;
-                    }else if($attendance->checkin_time > $office_start_time && $attendance->checkin_time < $break_start_time){
+                    }else if($attendance->chackin_time > $office_start_time && $attendance->chackin_time < $break_start_time){
                         $attendanceDays += 0.5;
                     }else{
                         $attendanceDays += 0;
@@ -43,10 +43,10 @@
                     $attendanceDays += 0;
                 }
 
-                if(!is_null($attendance->checkout_time)){
-                    if($attendance->checkout_time < $break_end_time){
+                if(!is_null($attendance->chackout_time)){
+                    if($attendance->chackout_time < $break_end_time){
                         $attendanceDays += 0;
-                    }else if($attendance->checkout_time > $break_end_time && $attendance->checkout_time < $office_end_time){
+                    }else if($attendance->chackout_time > $break_end_time && $attendance->chackout_time < $office_end_time){
                         $attendanceDays += 0.5;
                     }else{
                         $attendanceDays += 0.5;

@@ -75,8 +75,11 @@
                         </div>
                     </div>
         
+                    <h5>Payroll</h5>
+                    <div class="payroll_table mb-4"></div>
             
-                    <div class="attendance_overview_table mb-3"></div>
+                    <h5>Attendance Overview</h5>
+                    <div class="attendance_overview_table mb-4"></div>
             
                     <h5>Attendance Records</h5>
                     <table class="table table-bordered Datatable mb-4" style="width:100%;">
@@ -175,9 +178,26 @@
                 table.ajax.url(`/my-attendance/datatable/ssd?month=${month}&year=${year}`).load();
             }
 
+            payrollTable();
+
+                function payrollTable(){
+                    var employee_name = $('.employee_name').val();
+                    var month = $('.select-month').val();
+                    var year = $('.select-year').val();
+
+                    $.ajax({
+                        url: `/my-payroll-table?month=${month}&year=${year}`,
+                        type: 'GET',
+                        success: function(res){
+                            $('.payroll_table').html(res);
+                        }
+                    });
+                }
+
             $('.search-btn').on('click', function(event){
             event.preventDefault();
             attendanceOverviewTable();
+            payrollTable();
         });
     });
 </script>

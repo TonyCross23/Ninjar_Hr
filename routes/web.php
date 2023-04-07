@@ -10,7 +10,10 @@ use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\MyPayrollController;
+use App\Http\Controllers\MyProjectController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PermissionController;
@@ -85,5 +88,14 @@ Route::middleware('auth')->group(function(){
       //  payroll
       Route::get('payroll',[PayrollController::class,'payroll'])->name('payroll');
       Route::get('payroll-table', [PayrollController::class,'payrollTable']);
+      Route::get('my-payroll',[MyPayrollController::class,'ssd']);
+      Route::get('my-payroll-table', [MyPayrollController::class,'payrollTable']);
+
+        // project
+        Route::resource('project', ProjectController::class);
+        //project Datatable
+        Route::get('project/datatable/ssd',[ProjectController::class,'ssd'])->name('ssd');
+        Route::resource('my-project', MyProjectController::class)->only(['index','show']);
+        Route::get('my-project/datatable/ssd', [MyProjectController::class,'ssd']);
 
 });

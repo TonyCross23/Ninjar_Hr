@@ -34,7 +34,10 @@
     {{-- css --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.css" integrity="sha512-0IJ01kDH6fR7Oo1QEcyF+PgSLpefYXuGICVfNNoOseW6+HmsoaHzSZ7BAnwuu6BoK+nSn9WOeh0kiNjPNtGpuw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
  
+@yield('extra_css')
+    
 </head>
 
 <body>
@@ -118,6 +121,15 @@
                     <i class="fa fa-sitemap"></i>
                     <span>Department</span>
                   </a>
+                </li>
+                @endcan
+
+                @can('view_project')
+                <li>
+                    <a href="{{route('project.index')}}">
+                        <i class="fas fa-toolbox"></i>
+                        <span>Project</span>
+                    </a>
                 </li>
                 @endcan
 
@@ -231,7 +243,7 @@
                           <p class="mb-0">Attendance</p>
                       </a>
 
-                      <a href="">
+                      <a href="{{ route('my-project.index') }}">
                         <i class="fa-solid fa-briefcase"></i>
                           <p class="mb-0">Project</p>
                       </a>
@@ -283,7 +295,9 @@
     {{-- sweet alert --}}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-   
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js" integrity="sha512-f8kZwYACKF8unHuRV7j/5ILZfflRncxHp1f6y/PKuuRpCVgpORNZMne1jrghNzTVlXabUXIg1iJ5PvhuAaau6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     <script>
       const Toast = Swal.mixin({
@@ -430,8 +444,9 @@
             });
 
             
-            $(document).ready(function() {
-                 $('.select-item').select2();
+            $('.select-item').select2({
+                placeholder: '-- Please Choose --',
+                allowClear: true,
             });
         });
     </script>
