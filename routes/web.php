@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\PayrollController;
@@ -98,4 +99,7 @@ Route::middleware('auth')->group(function(){
         Route::resource('my-project', MyProjectController::class)->only(['index','show']);
         Route::get('my-project/datatable/ssd', [MyProjectController::class,'ssd']);
 
+        Route::resource('task', TaskController::class);
+        Route::get('task-data', [TaskController::class ,'taskData']);
+        Route::get('task-draggable', [TaskController::class ,'taskDraggable']);
 });

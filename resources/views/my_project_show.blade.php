@@ -1,5 +1,34 @@
 @extends('layouts.app')
 @section('title', 'Project Detail')
+@section('extra_css')
+<style>
+    .alert-warning {
+        background-color: #fff3cd88 !important;
+    }
+
+    .alert-info {
+        background-color: #d1ecf188 !important;
+    }
+
+    .alert-success {
+        background-color: #d4edda88 !important;
+    }
+
+    .select2-container {
+        z-index: 9999 !important;
+    }
+
+    .ghost {
+        background: #eee !important;
+        border: 2px dashed #333 !important;
+    }
+
+    .handle{
+        cursor: move;
+        cursor: -webkit-grabbing;
+    }
+</style>
+@endsection
 @section('content')
 <div class="row">
     <div class="col-md-9">
