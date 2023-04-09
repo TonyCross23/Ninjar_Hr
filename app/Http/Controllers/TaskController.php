@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class TaskController extends Controller
 {
     public function taskData(Request $request){
+      
         $project = Project::with('tasks')->where('id', $request->project_id)->firstOrFail();
 
         return view('components.task', compact('project'))->render();

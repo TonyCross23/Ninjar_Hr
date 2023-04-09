@@ -100,6 +100,6 @@ Route::middleware('auth')->group(function(){
         Route::get('my-project/datatable/ssd', [MyProjectController::class,'ssd']);
 
         Route::resource('task', TaskController::class);
-        Route::get('task-data', [TaskController::class ,'taskData']);
+        Route::get('task-data',[TaskController::class,'taskData']);
         Route::get('task-draggable', [TaskController::class ,'taskDraggable']);
 });

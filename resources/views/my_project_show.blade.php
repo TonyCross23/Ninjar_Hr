@@ -119,7 +119,6 @@
 @endsection
 @section('script')
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-
 <script>
     $(document).ready(function(){
         var project_id = "{{$project->id}}";
@@ -209,19 +208,19 @@
                 },
             });
         }
-
+        taskData();
         function taskData(){
             $.ajax({
                 url: `/task-data?project_id=${project_id}`,
                 type: 'GET',
                 success: function(res){
                     $('.task-data').html(res);
-                    initSortable();
+                    // initSortable();
                 }
             });
         }
 
-        taskData();
+
 
         new Viewer(document.getElementById('images'));
 
